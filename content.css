@@ -1,0 +1,120 @@
+#safekey-banner {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 2147483647;
+  background: #1f2430;
+  color: #f5f5f5;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 13px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
+  display: none;
+  align-items: center;
+  gap: 10px;
+  max-width: 420px;
+  border-left: 4px solid #e5484d;
+}
+
+#safekey-banner.safekey-visible {
+  display: flex;
+}
+
+#safekey-banner button {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: #f5f5f5;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+#safekey-banner button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+#safekey-close {
+  padding: 4px 8px !important;
+  font-size: 12px !important;
+}
+
+/* --- Blocking modal --- */
+
+#safekey-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  background: rgba(0, 0, 0, 0.55);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+#safekey-modal-overlay.safekey-visible {
+  display: flex;
+}
+
+#safekey-modal {
+  background: #fff;
+  color: #1f2430;
+  border-radius: 14px;
+  padding: 28px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+#safekey-modal-icon {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+#safekey-modal h2 {
+  font-size: 17px;
+  margin: 0 0 10px;
+}
+
+#safekey-modal p {
+  font-size: 13px;
+  color: #444;
+  margin: 0 0 20px;
+  line-height: 1.5;
+}
+
+#safekey-modal-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#safekey-modal-actions button {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: none;
+  font-size: 13px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+#safekey-modal-cancel {
+  background: #1f2430;
+  color: #fff;
+}
+
+#safekey-modal-cancel:hover {
+  background: #333a4a;
+}
+
+#safekey-modal-confirm {
+  background: #f1f1f1;
+  color: #555;
+}
+
+#safekey-modal-confirm:hover {
+  background: #e5e5e5;
+}
