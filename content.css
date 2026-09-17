@@ -1,89 +1,205 @@
+/* SafeKey — content UI (banner + blocking modal)
+   Color tokens follow the OS light/dark preference automatically. */
+
+:root {
+  --sk-bg: #ffffff;
+  --sk-surface: #ffffff;
+  --sk-border: #e2e4e9;
+  --sk-text: #14171f;
+  --sk-text-secondary: #5b6172;
+  --sk-warn: #b9670f;
+  --sk-warn-bg: #fdf3e7;
+  --sk-warn-border: #f0d9b8;
+  --sk-danger: #c23b31;
+  --sk-danger-bg: #fdecea;
+  --sk-shadow-sm: 0 4px 16px rgba(20, 23, 31, 0.12);
+  --sk-shadow-lg: 0 24px 64px rgba(20, 23, 31, 0.24);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --sk-bg: #181b21;
+    --sk-surface: #1e222a;
+    --sk-border: #2c313b;
+    --sk-text: #e8eaef;
+    --sk-text-secondary: #9aa1b2;
+    --sk-warn: #e3a55a;
+    --sk-warn-bg: #2c2418;
+    --sk-warn-border: #4a3c22;
+    --sk-danger: #e5675d;
+    --sk-danger-bg: #331d1b;
+    --sk-shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.35);
+    --sk-shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.5);
+  }
+}
+
+#safekey-banner,
+#safekey-modal-overlay,
+#safekey-modal-overlay * {
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* --- Warning banner (shown while typing) --- */
+
 #safekey-banner {
   position: fixed;
   bottom: 20px;
   right: 20px;
   z-index: 2147483647;
-  background: #1f2430;
-  color: #f5f5f5;
-  padding: 12px 16px;
-  border-radius: 10px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  font-size: 13px;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
   display: none;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   max-width: 420px;
-  border-left: 4px solid #e5484d;
+  padding: 14px 16px;
+  background: var(--sk-surface);
+  border: 1px solid var(--sk-warn-border);
+  border-radius: 12px;
+  box-shadow: var(--sk-shadow-sm);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 160ms ease, transform 160ms ease;
 }
 
 #safekey-banner.safekey-visible {
   display: flex;
+  opacity: 1;
+  transform: translateY(0);
 }
 
-#safekey-banner button {
-  background: rgba(255, 255, 255, 0.1);
+#safekey-banner-icon {
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  background: var(--sk-warn-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#safekey-banner-icon svg {
+  width: 16px;
+  height: 16px;
+  color: var(--sk-warn);
+}
+
+#safekey-banner-body {
+  flex: 1;
+  min-width: 0;
+}
+
+#safekey-banner-text {
+  display: block;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--sk-text);
+}
+
+#safekey-banner-actions {
+  display: flex;
+  gap: 14px;
+  margin-top: 6px;
+}
+
+#safekey-banner-actions button {
+  background: none;
   border: none;
-  color: #f5f5f5;
-  padding: 6px 10px;
-  border-radius: 6px;
+  padding: 0;
   font-size: 12px;
+  font-weight: 600;
+  color: var(--sk-text-secondary);
   cursor: pointer;
-  white-space: nowrap;
 }
 
-#safekey-banner button:hover {
-  background: rgba(255, 255, 255, 0.2);
+#safekey-banner-actions button:hover,
+#safekey-banner-actions button:focus-visible {
+  color: var(--sk-text);
 }
 
 #safekey-close {
-  padding: 4px 8px !important;
-  font-size: 12px !important;
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  border: none;
+  background: none;
+  color: var(--sk-text-secondary);
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
 }
 
-/* --- Blocking modal --- */
+#safekey-close:hover,
+#safekey-close:focus-visible {
+  background: var(--sk-border);
+  color: var(--sk-text);
+}
+
+/* --- Blocking modal (shown on send attempt) --- */
 
 #safekey-modal-overlay {
   position: fixed;
   inset: 0;
   z-index: 2147483647;
-  background: rgba(0, 0, 0, 0.55);
+  background: rgba(15, 17, 21, 0.5);
   display: none;
   align-items: center;
   justify-content: center;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  opacity: 0;
+  transition: opacity 140ms ease;
 }
 
 #safekey-modal-overlay.safekey-visible {
   display: flex;
+  opacity: 1;
 }
 
 #safekey-modal {
-  background: #fff;
-  color: #1f2430;
-  border-radius: 14px;
-  padding: 28px;
-  max-width: 400px;
-  width: 90%;
-  text-align: center;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  width: 92%;
+  max-width: 380px;
+  background: var(--sk-surface);
+  border: 1px solid var(--sk-border);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: var(--sk-shadow-lg);
+  transform: scale(0.96);
+  transition: transform 160ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+#safekey-modal-overlay.safekey-visible #safekey-modal {
+  transform: scale(1);
 }
 
 #safekey-modal-icon {
-  font-size: 32px;
-  margin-bottom: 8px;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: var(--sk-danger-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+#safekey-modal-icon svg {
+  width: 20px;
+  height: 20px;
+  color: var(--sk-danger);
 }
 
 #safekey-modal h2 {
-  font-size: 17px;
-  margin: 0 0 10px;
+  font-size: 16px;
+  font-weight: 650;
+  color: var(--sk-text);
+  margin: 0 0 8px;
 }
 
 #safekey-modal p {
   font-size: 13px;
-  color: #444;
-  margin: 0 0 20px;
-  line-height: 1.5;
+  line-height: 1.55;
+  color: var(--sk-text-secondary);
+  margin: 0 0 22px;
 }
 
 #safekey-modal-actions {
@@ -93,28 +209,46 @@
 }
 
 #safekey-modal-actions button {
-  padding: 10px 14px;
-  border-radius: 8px;
-  border: none;
+  padding: 11px 16px;
+  border-radius: 9px;
+  border: 1px solid transparent;
   font-size: 13px;
-  cursor: pointer;
   font-weight: 600;
+  cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease;
 }
 
 #safekey-modal-cancel {
-  background: #1f2430;
-  color: #fff;
+  background: var(--sk-text);
+  color: var(--sk-bg);
 }
 
 #safekey-modal-cancel:hover {
-  background: #333a4a;
+  opacity: 0.88;
 }
 
 #safekey-modal-confirm {
-  background: #f1f1f1;
-  color: #555;
+  background: transparent;
+  border-color: var(--sk-border);
+  color: var(--sk-text-secondary);
 }
 
 #safekey-modal-confirm:hover {
-  background: #e5e5e5;
+  border-color: var(--sk-text-secondary);
+  color: var(--sk-text);
+}
+
+#safekey-modal-actions button:focus-visible,
+#safekey-banner-actions button:focus-visible,
+#safekey-close:focus-visible {
+  outline: 2px solid var(--sk-warn);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #safekey-banner,
+  #safekey-modal-overlay,
+  #safekey-modal {
+    transition: none !important;
+  }
 }

@@ -37,9 +37,19 @@
     banner = document.createElement("div");
     banner.id = "safekey-banner";
     banner.innerHTML = `
-      <span id="safekey-banner-text"></span>
-      <button id="safekey-dismiss">Dismiss</button>
-      <button id="safekey-mute">Mute this site</button>
+      <div id="safekey-banner-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/>
+          <path d="M12 8v5"/><circle cx="12" cy="16" r="0.6" fill="currentColor" stroke="none"/>
+        </svg>
+      </div>
+      <div id="safekey-banner-body">
+        <span id="safekey-banner-text"></span>
+        <div id="safekey-banner-actions">
+          <button id="safekey-dismiss">Dismiss</button>
+          <button id="safekey-mute">Mute this site</button>
+        </div>
+      </div>
       <button id="safekey-close" aria-label="Close">✕</button>
     `;
     document.documentElement.appendChild(banner);
@@ -72,7 +82,12 @@
     modal.id = "safekey-modal-overlay";
     modal.innerHTML = `
       <div id="safekey-modal">
-        <div id="safekey-modal-icon">🛑</div>
+        <div id="safekey-modal-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/>
+            <path d="M12 8v5"/><circle cx="12" cy="16" r="0.6" fill="currentColor" stroke="none"/>
+          </svg>
+        </div>
         <h2>SafeKey blocked this send</h2>
         <p id="safekey-modal-text"></p>
         <div id="safekey-modal-actions">
