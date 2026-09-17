@@ -8,7 +8,7 @@ function render() {
     const domainsEl = document.getElementById("domains");
     domainsEl.innerHTML = "";
     if (settings.ignoredDomains.length === 0) {
-      domainsEl.textContent = "None yet.";
+      domainsEl.innerHTML = `<span class="empty">None yet.</span>`;
       return;
     }
     settings.ignoredDomains.forEach((domain) => {
